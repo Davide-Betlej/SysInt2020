@@ -5,6 +5,9 @@ console.log(process.env)
 const token = process.env.TOKEN
 const expressip = require('express-ip');
 app.use(expressip().getIpInfoMiddleware);
+const { Resolver } = require('dns');
+const resolver = new Resolver();
+resolver.setServers(['8.8.8.8']);
 
 
 
@@ -29,10 +32,6 @@ app.get('/ping', (req, res) => {
 app.put('/dns', function (req, res) {
   res.send('Dostałem request typu PUT na /dns')
 })
-
-const { Resolver } = require('dns');
-const resolver = new Resolver();
-resolver.setServers(['8.8.8.8']);
 
 resolver.resolve4('/dns', (err, addresses) => {
   console.log(addresses);
