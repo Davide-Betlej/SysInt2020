@@ -26,6 +26,22 @@ app.get('/ping', (req, res) => {
   })
 })
 
+app.put('/dns', function (req, res) {
+  res.send('Dostałem request typu PUT na /dns')
+})
+
+const { Resolver } = require('dns');
+const resolver = new Resolver();
+resolver.setServers(['8.8.8.8']);
+
+resolver.resolve4('/dns', (err, addresses) => {
+  console.log(addresses);
+});
+
+resolver.resolveTxt('/dns', (err, addresses) => {
+  console.log(addresses);
+});
+
 app.listen(port, () => {
   console.log("Example app listening at http://localhost:" + port)
 })
